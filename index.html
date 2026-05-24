@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickStar Image Cutter</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ── Intro Page ──────────────────────────────────────── -->
+  <section id="intro">
+    <div class="intro-content">
+      <div class="intro-badge anim-1">Samsung Galaxy One UI 8.5</div>
+      <h1 class="intro-title anim-2">QuickStar<br>Image Cutter</h1>
+      <p class="intro-desc anim-3">상단바 빠른 설정 버튼에 나만의 이미지를<br>손쉽게 분할해 적용하세요</p>
+
+      <div class="intro-visual anim-4">
+        <div class="iv-demo-item">
+          <img src="images/sample_image.png" alt="원본 이미지" class="iv-demo-img iv-demo-square">
+          <div class="iv-label">Your image</div>
+        </div>
+        <div class="iv-op">+</div>
+        <div class="iv-demo-item">
+          <img src="images/sample_before.png" alt="레이아웃" class="iv-demo-img iv-demo-phone">
+          <div class="iv-label">Your layout</div>
+        </div>
+        <div class="iv-op">→</div>
+        <div class="iv-demo-item">
+          <img src="images/sample_after.png" alt="결과" class="iv-demo-img iv-demo-phone">
+          <div class="iv-label">Result</div>
+        </div>
+      </div>
+
+      <div class="intro-steps anim-5">
+        <div class="intro-step">
+          <span class="is-num">1</span>
+          <span class="is-label">레이아웃 설정</span>
+        </div>
+        <div class="intro-step">
+          <span class="is-num">2</span>
+          <span class="is-label">이미지 업로드</span>
+        </div>
+        <div class="intro-step">
+          <span class="is-num">3</span>
+          <span class="is-label">영역 선택</span>
+        </div>
+        <div class="intro-step">
+          <span class="is-num">4</span>
+          <span class="is-label">분할 &amp; 저장</span>
+        </div>
+      </div>
+
+      <div class="intro-credit anim-6">
+        제작자: <a href="https://sangyeon-park.github.io/" target="_blank" rel="noopener">박상연</a>
+        &nbsp;·&nbsp; 원본 코드:
+        <a href="https://github.com/sangyeon-park/Image-Cutter-for-QuickStar" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg class="ic-github" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        </a>
+      </div>
+
+      <button id="btnGetStarted" class="btn btn-start anim-7">시작하기 →</button>
+    </div>
+  </section>
+
+  <!-- ── Main App ────────────────────────────────────────── -->
+  <div id="app" style="display:none">
+    <header>
+      <h1>QuickStar Image Cutter</h1>
+      <p class="subtitle">Samsung Galaxy One UI 상단바 버튼 이미지 분할 도구</p>
+      <nav class="step-indicator">
+        <div class="step-item active" id="indicator-1" data-step="1">
+          <div class="step-circle">1</div>
+          <span>레이아웃</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-item" id="indicator-2" data-step="2">
+          <div class="step-circle">2</div>
+          <span>이미지</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-item" id="indicator-3" data-step="3">
+          <div class="step-circle">3</div>
+          <span>자르기</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-item" id="indicator-4" data-step="4">
+          <div class="step-circle">4</div>
+          <span>다운로드</span>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Step 1: Layout Grid -->
+      <section id="step1" class="step-section active">
+        <div class="section-header">
+          <h2>Step 1: 레이아웃 설정</h2>
+          <p>상단바의 전체 그리드 크기를 입력하고, 각 버튼의 위치를 드래그로 지정하세요.</p>
+        </div>
+        <div class="grid-inputs">
+          <label>
+            <span>세로 (H)</span>
+            <input id="inputRows" type="number" min="1" max="30" value="7" placeholder="행 수">
+          </label>
+          <span class="times-sign">×</span>
+          <label>
+            <span>가로 (W)</span>
+            <input id="inputCols" type="number" min="1" max="30" value="4" placeholder="열 수">
+          </label>
+          <button id="btnBuildGrid" class="btn btn-primary">그리드 만들기</button>
+          <button id="btnResetGrid" class="btn btn-danger">초기화</button>
+        </div>
+        <div id="gridHelp" class="help-text" style="display:none">
+          드래그로 버튼 영역을 선택하세요. 선택된 영역을 클릭하면 취소됩니다.
+        </div>
+        <div id="gridContainer"></div>
+        <div class="step-nav">
+          <button class="btn btn-restart js-restart">처음으로 ↺</button>
+          <button id="btnToStep2" class="btn btn-next" disabled>다음 →</button>
+        </div>
+      </section>
+
+      <!-- Step 2: Image Upload -->
+      <section id="step2" class="step-section">
+        <div class="section-header">
+          <h2>Step 2: 이미지 업로드</h2>
+          <p>분할할 이미지를 업로드하세요. 드래그&amp;드롭, 파일 선택, 또는 Ctrl+V를 사용할 수 있습니다.</p>
+        </div>
+        <div id="dropZone">
+          <div class="drop-icon">🖼️</div>
+          <p>이미지를 여기에 드래그하거나</p>
+          <div class="upload-actions">
+            <button id="btnPickFile" class="btn btn-primary">파일 선택</button>
+            <span class="or-text">또는 Ctrl+V로 붙여넣기</span>
+          </div>
+          <input type="file" id="filePicker" accept="image/*" style="display:none">
+        </div>
+        <div id="previewContainer" style="display:none">
+          <img id="previewImg" alt="업로드된 이미지 미리보기">
+        </div>
+        <div class="step-nav">
+          <button class="btn btn-restart js-restart">처음으로 ↺</button>
+          <button id="btnToStep1From2" class="btn btn-back">← 이전</button>
+          <button id="btnToStep3" class="btn btn-next" disabled>다음 →</button>
+        </div>
+      </section>
+
+      <!-- Step 3: Crop -->
+      <section id="step3" class="step-section">
+        <div class="section-header">
+          <h2>Step 3: 이미지 자르기</h2>
+          <p>그리드 비율에 맞게 자를 영역을 선택하세요. 핸들을 드래그해서 크기를 조절할 수 있습니다.</p>
+        </div>
+        <div id="cropWrapper">
+          <canvas id="cropCanvas"></canvas>
+        </div>
+        <div class="step-nav">
+          <button class="btn btn-restart js-restart">처음으로 ↺</button>
+          <button id="btnToStep2From3" class="btn btn-back">← 이전</button>
+          <button id="btnCropAndContinue" class="btn btn-next">자르기 &amp; 계속 →</button>
+        </div>
+      </section>
+
+      <!-- Step 4: Slice & Download -->
+      <section id="step4" class="step-section">
+        <div class="section-header">
+          <h2>Step 4: 분할 &amp; 다운로드</h2>
+          <p>레이아웃에 맞게 분할된 결과입니다. 유형을 선택한 뒤 ZIP 파일로 다운로드하세요.</p>
+        </div>
+
+        <!-- Layout Preview -->
+        <div id="layoutPreviewWrap">
+          <h3 class="sub-heading">분할 미리보기</h3>
+          <div id="layoutPreviewContainer"></div>
+        </div>
+
+        <!-- Tile Type Selection -->
+        <div id="tileTypeSection">
+          <h3 class="sub-heading">타일 유형 선택</h3>
+          <p class="tt-desc">
+            <strong>버튼 박스 · 미디어 플레이어 · 밝기 조절 · 볼륨 조절</strong>에 해당하는 타일을 체크하세요.<br>
+            (투명도 조절을 위해 사용됩니다)
+          </p>
+          <div id="tileTypeGrid"></div>
+          <div class="tt-warn">
+            ⚠️ 미디어 플레이어는 음악 재생 시 설정한 이미지가 나오지 않으므로 설정을 권장하지 않습니다.<br>
+            버튼 박스는 확장할 때 설정한 이미지가 동시에 확장될 수 있습니다.
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button id="btnToStep3From4" class="btn btn-back">← 이전</button>
+          <button id="btnDownloadZip" class="btn btn-download">ZIP 다운로드</button>
+          <button id="btnRestart" class="btn btn-restart js-restart">처음으로 ↺</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/step1-grid.js"></script>
+  <script src="js/step2-upload.js"></script>
+  <script src="js/step3-crop.js"></script>
+  <script src="js/step4-slice.js"></script>
+</body>
+</html>
