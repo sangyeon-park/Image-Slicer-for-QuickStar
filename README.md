@@ -1,4 +1,4 @@
-# QuickStar Image Cutter
+# QuickStar Image Slicer
 
 Samsung Galaxy **One UI 8.5** 상단바 빠른 설정(QuickStar) 버튼에 나만의 이미지를 적용하기 위한 이미지 분할 도구입니다.
 
