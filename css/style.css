@@ -20,6 +20,7 @@ body {
   color: var(--text);
   font-family: 'Segoe UI', system-ui, sans-serif;
   min-height: 100vh;
+  word-break: keep-all;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -271,9 +272,16 @@ header .subtitle { color: var(--text-dim); margin-top: 6px; font-size: 0.95rem; 
 }
 .step-item.active .step-circle { background: var(--accent); border-color: var(--accent); }
 .step-item.done .step-circle  { background: var(--success); border-color: var(--success); }
-.step-item span { font-size: 0.75rem; color: var(--text-dim); }
+.step-item span { font-size: 0.75rem; color: var(--text-dim); white-space: nowrap; }
 .step-item.active span { color: var(--text); }
-.step-connector { width: 60px; height: 2px; background: var(--border); margin-bottom: 22px; }
+.step-connector { width: 60px; height: 2px; background: var(--border); margin-bottom: 22px; flex-shrink: 1; min-width: 8px; }
+
+@media (max-width: 600px) {
+  .step-circle { width: 30px; height: 30px; font-size: 0.82rem; }
+  .step-connector { width: 16px; margin-bottom: 19px; }
+  .step-item { gap: 4px; }
+  .step-item span { font-size: 0.68rem; }
+}
 
 /* ── Section ─────────────────────────────────────────────── */
 .step-section { display: none; }
