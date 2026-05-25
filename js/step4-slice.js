@@ -58,7 +58,19 @@ window.Step4 = (function () {
     canvas.height = PH;
     const ctx = canvas.getContext('2d');
 
-    ctx.drawImage(imgReal, pad, pad, photoW, photoH, 0, 0, PW, PH);
+    function pillPath(px, py, pw, ph, rad) {
+      ctx.beginPath();
+      if (ctx.roundRect) {
+        ctx.roundRect(px, py, pw, ph, rad);
+      } else {
+        ctx.moveTo(px + rad, py);
+        ctx.arcTo(px + pw, py,      px + pw, py + ph, rad);
+        ctx.arcTo(px + pw, py + ph, px,      py + ph, rad);
+        ctx.arcTo(px,      py + ph, px,      py,      rad);
+        ctx.arcTo(px,      py,      px + pw, py,      rad);
+        ctx.closePath();
+      }
+    }
 
     // Draw colored outlines and number badges per button
     buttons.forEach((btn, i) => {
@@ -76,22 +88,19 @@ window.Step4 = (function () {
       // Map to preview coordinates (canvas origin = photo content top-left, no pad offset)
       const px = leftG * scale, py = topG  * scale;
       const pw = (rightG - leftG) * scale, ph = (botG - topG) * scale;
+      const rad = Math.min(pw, ph) / 2;
+
+      // Clip image to pill shape — only visible-on-device area is shown
+      ctx.save();
+      pillPath(px, py, pw, ph, rad);
+      ctx.clip();
+      ctx.drawImage(imgReal, pad, pad, photoW, photoH, 0, 0, PW, PH);
+      ctx.restore();
 
       // Colored pill outline (max corner radius)
-      const rad = Math.min(pw, ph) / 2;
       ctx.strokeStyle = color;
       ctx.lineWidth   = 2.5;
-      ctx.beginPath();
-      if (ctx.roundRect) {
-        ctx.roundRect(px, py, pw, ph, rad);
-      } else {
-        ctx.moveTo(px + rad, py);
-        ctx.arcTo(px + pw, py,      px + pw, py + ph, rad);
-        ctx.arcTo(px + pw, py + ph, px,      py + ph, rad);
-        ctx.arcTo(px,      py + ph, px,      py,      rad);
-        ctx.arcTo(px,      py,      px + pw, py,      rad);
-        ctx.closePath();
-      }
+      pillPath(px, py, pw, ph, rad);
       ctx.stroke();
 
       // Number badge (centered in the button area)
