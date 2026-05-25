@@ -11,6 +11,12 @@ window.AppState = {
 (function () {
   const STEPS = [1, 2, 3, 4];
   let currentStep = 1;
+  let suppressHistory = false;
+
+  function pushHistory(state) {
+    if (suppressHistory) return;
+    history.pushState(state, '');
+  }
 
   function showIntro() {
     document.getElementById('intro').style.display = 'flex';
@@ -36,6 +42,8 @@ window.AppState = {
 
     if (n === 3) window.Step3 && window.Step3.init();
     if (n === 4) window.Step4 && window.Step4.init();
+
+    pushHistory({ view: 'app', step: n });
   }
 
   function restart() {
@@ -68,12 +76,41 @@ window.AppState = {
         if (i === 1) ind.classList.add('active');
       }
     });
+
+    pushHistory({ view: 'intro' });
   }
 
   // Intro → App
   document.getElementById('btnGetStarted').addEventListener('click', () => {
     showApp();
     goToStep(1);
+  });
+
+  // Normalize initial history entry, then react to back/forward.
+  history.replaceState({ view: 'intro' }, '');
+  window.addEventListener('popstate', e => {
+    const s = e.state || { view: 'intro' };
+    suppressHistory = true;
+    try {
+      if (s.view === 'app') {
+        showApp();
+        goToStep(s.step || 1);
+      } else {
+        showIntro();
+        currentStep = 1;
+        STEPS.forEach(i => {
+          const sec = document.getElementById('step' + i);
+          const ind = document.getElementById('indicator-' + i);
+          if (sec) sec.classList.toggle('active', i === 1);
+          if (ind) {
+            ind.classList.remove('active', 'done');
+            if (i === 1) ind.classList.add('active');
+          }
+        });
+      }
+    } finally {
+      suppressHistory = false;
+    }
   });
 
   // Step indicator: click "done" steps to navigate back

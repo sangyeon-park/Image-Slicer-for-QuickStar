@@ -160,6 +160,7 @@ window.Step3 = (function () {
     const { mx, my } = toNatural(e);
     const h = getHandle(mx, my);
     if (!h) return;
+    e.preventDefault();
     activeHandle = h;
     dragOrigin = { mx, my, rect: { ...AppState.cropRect } };
     canvas.setPointerCapture(e.pointerId);
@@ -168,6 +169,7 @@ window.Step3 = (function () {
   function onMouseMove(e) {
     const { mx, my } = toNatural(e);
     if (activeHandle) {
+      e.preventDefault();
       applyDrag(mx, my);
     } else {
       const h = getHandle(mx, my);

@@ -134,12 +134,42 @@
         <div class="grid-inputs">
           <label>
             <span data-i18n="step1.height">세로 (H)</span>
-            <input id="inputRows" type="number" min="1" max="30" value="7" placeholder="행 수" data-i18n-placeholder="step1.rowsPh">
+            <span class="num-row">
+              <select id="inputRows" class="num-dropdown">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7" selected>7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="other" data-i18n="step1.other">기타</option>
+              </select>
+              <input id="inputRowsCustom" class="num-custom" type="number" min="1" max="30"
+                     placeholder="행 수" data-i18n-placeholder="step1.rowsPh" hidden>
+            </span>
           </label>
           <span class="times-sign">×</span>
           <label>
             <span data-i18n="step1.width">가로 (W)</span>
-            <input id="inputCols" type="number" min="1" max="30" value="4" placeholder="열 수" data-i18n-placeholder="step1.colsPh">
+            <span class="num-row">
+              <select id="inputCols" class="num-dropdown">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="other" data-i18n="step1.other">기타</option>
+              </select>
+              <input id="inputColsCustom" class="num-custom" type="number" min="1" max="30"
+                     placeholder="열 수" data-i18n-placeholder="step1.colsPh" hidden>
+            </span>
           </label>
           <button id="btnBuildGrid" class="btn btn-primary" data-i18n="step1.build">그리드 만들기</button>
           <button id="btnResetGrid" class="btn btn-danger" data-i18n="step1.reset">초기화</button>

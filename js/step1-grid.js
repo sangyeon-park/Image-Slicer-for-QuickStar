@@ -152,9 +152,17 @@
     renderAllCells();
   }
 
+  function readDim(selectId, customId) {
+    const sel = document.getElementById(selectId);
+    if (sel.value === 'other') {
+      return parseInt(document.getElementById(customId).value, 10);
+    }
+    return parseInt(sel.value, 10);
+  }
+
   function buildGrid() {
-    const rows = parseInt(document.getElementById('inputRows').value, 10);
-    const cols = parseInt(document.getElementById('inputCols').value, 10);
+    const rows = readDim('inputRows', 'inputRowsCustom');
+    const cols = readDim('inputCols', 'inputColsCustom');
     if (!rows || !cols || rows < 1 || cols < 1) return;
 
     // Preserve buttons that still fit within the new dimensions
@@ -211,6 +219,8 @@
     if (!info) return;
     const { r, c } = info;
 
+    e.preventDefault();
+
     if (occupancy[r][c] !== 0) {
       removeButton(occupancy[r][c]);
       return;
@@ -224,6 +234,7 @@
 
   function onPointerMove(e) {
     if (!dragging || !dragStart) return;
+    e.preventDefault();
     const info = getCellFromPoint(e.clientX, e.clientY);
     if (!info) return;
     const { r2, c2 } = clampDrag(dragStart.r, dragStart.c, info.r, info.c);
@@ -265,6 +276,18 @@
     renderAllCells();
     dragStart = null;
   }
+
+  function bindDimToggle(selectId, customId) {
+    const sel = document.getElementById(selectId);
+    const cus = document.getElementById(customId);
+    sel.addEventListener('change', () => {
+      const isOther = sel.value === 'other';
+      cus.hidden = !isOther;
+      if (isOther) cus.focus();
+    });
+  }
+  bindDimToggle('inputRows', 'inputRowsCustom');
+  bindDimToggle('inputCols', 'inputColsCustom');
 
   document.getElementById('btnBuildGrid').addEventListener('click', buildGrid);
   document.getElementById('btnResetGrid').addEventListener('click', resetGrid);

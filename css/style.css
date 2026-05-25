@@ -102,7 +102,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: clamp(6px, 2vw, 20px);
   margin-bottom: 36px;
 }
 
@@ -146,10 +146,10 @@ body {
 
 /* ── Intro Demo Images ───────────────────────────────── */
 .iv-demo-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.iv-op { font-size: 1.1rem; color: var(--text-dim); padding: 0 4px; align-self: center; }
+.iv-op { font-size: clamp(0.85rem, 2.4vw, 1.1rem); color: var(--text-dim); padding: 0 4px; align-self: center; }
 .iv-demo-img { border-radius: 8px; object-fit: cover; display: block; }
-.iv-demo-square { width: 160px; height: 160px; }
-.iv-demo-phone  { width: 119px; height: 160px; }
+.iv-demo-square { width: clamp(72px, 22vw, 160px); height: clamp(72px, 22vw, 160px); }
+.iv-demo-phone  { width: clamp(54px, 16.4vw, 119px); height: clamp(72px, 22vw, 160px); }
 
 /* ── Intro Steps ──────────────────────────────────────── */
 .intro-steps {
@@ -301,6 +301,7 @@ header .subtitle { color: var(--text-dim); margin-top: 6px; font-size: 0.95rem; 
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s, opacity 0.15s, transform 0.1s;
+  white-space: nowrap;
 }
 .btn:active { transform: scale(0.97); }
 .btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
@@ -328,6 +329,13 @@ header .subtitle { color: var(--text-dim); margin-top: 6px; font-size: 0.95rem; 
   align-items: center;
   gap: 12px;
   margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .btn { padding: 10px 14px; font-size: 0.88rem; }
+  .btn-download { padding: 12px 20px; }
+  .btn-restart { margin-left: 0; }
 }
 
 /* ── Step 1: Layout Example ──────────────────────────────── */
@@ -419,7 +427,8 @@ header .subtitle { color: var(--text-dim); margin-top: 6px; font-size: 0.95rem; 
   font-size: 0.85rem;
   color: var(--text-dim);
 }
-.grid-inputs input[type="number"] {
+.grid-inputs input[type="number"],
+.grid-inputs select.num-dropdown {
   width: 80px;
   padding: 8px 12px;
   background: var(--surface2);
@@ -429,8 +438,12 @@ header .subtitle { color: var(--text-dim); margin-top: 6px; font-size: 0.95rem; 
   font-size: 1rem;
   text-align: center;
   outline: none;
+  font-family: inherit;
 }
-.grid-inputs input[type="number"]:focus { border-color: var(--accent); }
+.grid-inputs input[type="number"]:focus,
+.grid-inputs select.num-dropdown:focus { border-color: var(--accent); }
+.num-row { display: inline-flex; align-items: center; gap: 6px; }
+.num-row .num-custom { width: 72px; }
 .times-sign { font-size: 1.4rem; color: var(--text-dim); padding-bottom: 6px; }
 
 .help-text {
@@ -462,6 +475,7 @@ header .subtitle { color: var(--text-dim); margin-top: 6px; font-size: 0.95rem; 
   cursor: crosshair;
   position: relative;
   transition: background 0.08s;
+  touch-action: none;
 }
 .grid-cell.hover-preview { background: rgba(79,142,247,0.2) !important; }
 .grid-cell.occupied { cursor: pointer; }
@@ -517,6 +531,7 @@ header .subtitle { color: var(--text-dim); margin-top: 6px; font-size: 0.95rem; 
   display: block;
   cursor: crosshair;
   border-radius: 4px;
+  touch-action: none;
 }
 
 /* ── Step 4: Layout Preview ──────────────────────────────── */
