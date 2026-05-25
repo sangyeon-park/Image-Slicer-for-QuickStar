@@ -173,3 +173,9 @@ So far, correct behavior has only been verified on my Galaxy S23. Tiles may not 
 Feel free to decorate your status bar with your family, partner, pet, favorite idol — whoever you love. For bugs or feedback, please open a [GitHub Issue](https://github.com/sangyeon-park/Image-Slicer-for-QuickStar/issues) or email **tkddus0421@gmail.com**. If you'd like to show off how your tiles turned out, send it in — I'll pick my favorites and immortalize(?) them here. Thank you!
 
 여러분의 가족, 이성친구, 반려동물, 최애 등으로 상단바를 맘껏 꾸며 주세요. 버그나 피드백은 [GitHub Issue](https://github.com/sangyeon-park/Image-Slicer-for-QuickStar/issues) 또는 **tkddus0421@gmail.com** 으로 보내 주세요. 적용된 모습을 자랑으로 보내 주신다면, 마음에 드는 작품을 골라 박제(?)해 드리겠습니다. 감사합니다!
+
+---
+
+<sub>*The sample images were generated with GPT-5.5, and most of the code was written with the help of Claude Sonnet 4.6.*</sub>
+
+<sub>*샘플 이미지는 GPT-5.5로 생성되었으며, 대부분의 코드는 Claude Sonnet 4.6의 도움을 받아 작성되었음을 밝힙니다.*</sub>
